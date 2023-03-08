@@ -1,0 +1,179 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-image: url("https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWVkaWNpbmVzfGVufDB8fDB8fA%3D%3D&w=1000&q=80");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode:soft-light;
+    margin: 40px 300px 40px 300px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    background-color: rgba(238, 238, 238, 0.692);
+  }
+  .container {
+    padding: 20px 50px 20px 50px;
+    background-color: rgba(192, 226, 237, 0.88);
+    border-radius: 8px;
+  }
+  h1 {
+    text-align: center;
+    color: #2C3333;
+    font-family: 'Monoton', cursive;
+    font-size: 60px;
+  }
+  h2 {
+    color: lightslategrey;
+  }
+  t {
+    font-size: small;
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(214, 246, 245);
+    border-radius: 4px;
+    background-color: rgb(250, 250, 250);
+    font-family: 'Montserrat', sans-serif;
+    margin: 7px;
+    /* text-align: center; */
+  }
+  
+  input[type="date"] {
+    padding: 10px;
+    border: 1px solid rgb(214, 246, 245);
+    border-radius: 4px;
+    background-color: rgb(250, 250, 250);
+  }
+  fieldset {
+    border: 1px solid rgb(214, 246, 245);
+    background-color: rgb(250, 250, 250);
+    border-radius: 4px;
+    padding: 10px;
+    text-indent: 5px;
+    height: 55px;
+  }
+  .buttons{
+    display: flex;
+    justify-content: space-around;
+  }
+  .register{
+    text-align: center;
+  }
+  input[type="submit"],input[type="reset"] {
+    background-color: rgb(61, 196, 214);
+    /* width: 30%; */
+    /* height: 40px; */
+    padding:10px 100px 10px 100px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: linen;
+    font-size: 20px;
+  }
+  input[type="reset"]{
+    background-color: #F0A04B;
+  }
+  input[type="submit"]:hover {
+    background-color: rgb(18, 179, 200);
+  }
+  input[type="reset"]:hover {
+    background-color:  #e38521;
+  }
+  .reset {
+    text-align: right;
+  }
+ 
+  input[type="text"]:hover,
+  input[type="email"]:hover,
+  input[type="number"]:hover,
+  select:hover,
+  input[type="date"]:hover,
+  fieldset:hover {
+    border-color: aqua;
+  }
+  .samecol{
+    display:flex;
+  }
+  .samecol>div{
+    padding-right:20px;
+  }
+  .addresscol{
+    margin-top:0;
+  }
+  .row{
+    margin:20px auto 20px auto ;
+  }
+  .audiodiv{
+    display:flex; 
+    justify-content:center;
+  }
+  .playbutton{
+    width:400px;
+  }
+  #progress{
+    -webkit-appearance:none;
+    width:60%;
+    height:6px;
+    background:#2C3333;
+    cursor:pointer;
+    border-radius:4px;
+    margin:47px 0;
+    margin-left:20px;
+  }
+  #progress::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    background-color:rgb(61, 196, 214);
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    border:2px solid white;
+    box-shadow:0 5px 5px rgba(255,100,30,0.22);
+  }
+  #progress::-webkit-slider-thumb:hover{
+    background-color:rgb(9, 161, 181);
+    width:30px;
+    height:30px;
+  }
+  .control{
+    width:100px;
+    height:100px;
+    color:white;
+    border:5px solid white;
+    background-image:url(https://img.freepik.com/free-vector/musical-notes-frame-with-text-space_1017-32857.jpg);
+    background-size:cover;
+    border-radius:50%;
+    /* text-align:center; */
+    margin: 0;
+
+  }
+  .control:hover{
+    cursor:pointer;
+    border:1px dotted;
+  }
+  i{
+    position: relative;
+    top: 20%;
+    left:35%;
+  }
+  
+  .musicimage>img{
+    width:100px;
+    height:100px;
+    /* position:relative: */
+    border-radius:50%;
+  }
+  .dots{
+    border-bottom:8px #2C3333 dotted;
+    margin:50px 40% ;
+    
+  }
+  label{
+    margin-left:10px;
+  }

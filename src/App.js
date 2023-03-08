@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import Temp from "./Temp";
+import RightSection from "./RightSection";
+import FileStorage from "./FileStorage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Home";
+import AllFiles from "./AllFiles";
+import SavedFiles from "./SavedFiles";
+import ProfilePage from "./ProfilePage";
+import FormContainer from "./components/FormContainer"
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-row h-ful">
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<Home />}/>
+          <Route exact path="/All" element={<AllFiles />} />
+          <Route exact path="/Saved" element={<FormContainer />} />
+          <Route exact path="/Profile" element={<ProfilePage />} />
+        </Routes>
+      </BrowserRouter>
+      {/* <Temp/> */}
+      {/* <RightSection/> */}
+      {/* <FileStorage/> */}
     </div>
   );
 }
