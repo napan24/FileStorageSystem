@@ -1,0 +1,80 @@
+import React, { useEffect, useState } from "react";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
+import FolderIcon from "@mui/icons-material/Folder";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import { getDownloadURL, ref, listAll } from "firebase/storage";
+import { storage } from "./config/firebase";
+const FileSection = () => {
+  const [files, setFiles] = useState(null);
+  const openPDF = (item) => {
+    getDownloadURL(ref(storage, item)).then((url) => {
+      window.open(url, "_blank");
+    });
+  };
+  const addFileToSaved = (item) => {
+    alert("Succesfully added"+item)
+  };
+
+  useEffect(() => {
+    const listRef = ref(storage, "");
+    listAll(listRef)
+      .then((res) => {
+        setFiles(res.items);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  return (
+    <div className="">
+      <div className="text-white text-3xl ml-4 mt-4 mb-4">Files</div>
+      <div className=" flex flex-wrap">
+        {files != null &&
+          files.map((item) => (
+            <>
+              <div style={{ position: "relative" }}>
+                <Button
+                  onClick={() => {
+                    openPDF(item.name);
+                  }}
+                >
+                  <div className="basis-1/6 mb-4 bg-amber-400 h-32 rounded-md ml-4 flex justify-center items-center flex-col">
+                    <InsertDriveFileIcon
+                      sx={{ color: "white", height: "50%", width: "50%" }}
+                    />
+                    <div className="mt-4 text-lg text-white">
+                      {item.name.length > 10
+                        ? item.name.substr(0, 12) + ".."
+                        : item.name.substr(0, 14)}
+                    </div>
+                  </div>
+                </Button>
+                <AddCircleIcon
+                  onClick={() => {
+                    addFileToSaved(item.name);
+                  }}
+                  fontSize="large"
+                  style={{
+                    color: "white",
+                    borderRadius: "100px",
+                    position: "absolute",
+                    right: "-7",
+                    top: "-7",
+                  }}
+                ></AddCircleIcon>
+              </div>
+            </>
+          ))}
+      </div>
+    </div>
+  );
+};
+
+export default FileSection;
