@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { useNavigate } from "react-router-dom";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 const Temp = () => {
+  const [email,setEmail]=useState(localStorage.getItem('profile_email').replace(/['"]+/g, ''));
+  const [name,setName]=useState(localStorage.getItem('profile_name').replace(/['"]+/g, ''));
+  const [role,setRole]=useState("Admin");
+  const navigate = useNavigate();
+  const logOut=()=>{
+      localStorage.removeItem('profile_email');
+      localStorage.removeItem('profile_name');
+      localStorage.removeItem('profile_role');
+      navigate("/");
+  }
+  
   return (
     <div className="flex flex-col h-[100vh] bg-slate-800 w-[20%] text-white place-items-center">
       <Avatar
@@ -15,10 +27,11 @@ const Temp = () => {
         sx={{ width: 125, height: 125 }}
         src={require("./images/profile_image.jpg")}
       />
-      <div className="mt-6 text-xl">Napan Vijayvargiya</div>
-      <div className="mt-1 text-base">20BCS141@iiitdmj.ac.in</div>
-      <hr className="mt-6 mb-6 h-1 w-[90%] border-2 border-violet-900" />
-      <Link to="/">
+      <div className="mt-2 text-xl">{name}</div>
+      <div className="mt-1 text-base">{email}</div>
+      <div className="mt-1 text-base">{role}</div>
+      <hr className="mt-3 mb-6 h-1 w-[90%] border-2 border-violet-900" />
+      <Link to="/Home">
         <Button size="large" variant="text" startIcon={<DashboardIcon />}>
           Dashboard
         </Button>
@@ -42,14 +55,21 @@ const Temp = () => {
         </Link>
       </div>
       <div className="mt-4">
+        {role=="Admin"?
+        <Link to="/EditRoles">
+        <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
+          Edit Roles
+        </Button></Link>:
         <Link to="/Saved">
           <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
             Saved Files
           </Button>
         </Link>
+      }
       </div>
       <hr className="mt-1 mb-6 h-1 w-[90%] border-2 border-violet-900" />
       <Button
+        onClick={logOut}
         size="large"
         sx={{ width: "80%" }}
         disableElevation

@@ -14,9 +14,11 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
+import { useNavigate } from "react-router-dom";
 const defaultTheme = createTheme();
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email,setEmail]=React.useState("");
   const [password,setPassword]=React.useState("");
   const searchUser = async () => {
@@ -28,7 +30,15 @@ export default function Login() {
       body: JSON.stringify({ email, password }),
     });
     const result = await res.json();
-    console.log(result);
+    console.log(result.exist);
+    if(result.exist.length>0){
+      console.log(result.exist[0]);
+      localStorage.setItem('profile_email', JSON.stringify(result.exist[0].email));
+      localStorage.setItem('profile_role', JSON.stringify(result.exist[0].Role));
+      localStorage.setItem('profile_password', JSON.stringify(result.exist[0].password));
+      localStorage.setItem('profile_name', JSON.stringify(result.exist[0].name));
+      navigate("/Home");
+    }
   };
   // const downloadPDF=()=>{
   //   const capture=document.querySelector(".details");

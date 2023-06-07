@@ -10,6 +10,14 @@ const user=new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    Role:{
+        type:String
+        ,default:"Student"
+    },
+    name:{
+        type:String,
+        default:"ADD YOUR NAME"
     }
 });
 const scheme=mongoose.model('USER',user);

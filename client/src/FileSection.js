@@ -12,13 +12,31 @@ import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { storage } from "./config/firebase";
 const FileSection = () => {
   const [files, setFiles] = useState(null);
+  const [email,setEmail]=useState(localStorage.getItem('profile_email').replace(/['"]+/g, ''));
+  const [role,setRole]=useState(localStorage.getItem('profile_role').replace(/['"]+/g, ''));
   const openPDF = (item) => {
     getDownloadURL(ref(storage, item)).then((url) => {
       window.open(url, "_blank");
     });
   };
   const addFileToSaved = (item) => {
-    alert("Succesfully added"+item)
+      if(role=="Student"){
+        saveFile(item);
+      }
+      else{
+        alert("Cannot save");
+      }
+  };
+  const saveFile = async (item) => {
+    const res = await fetch("/saveFile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ item, email}),
+    });
+    const result = await res.json();
+    console.log(result);
   };
 
   useEffect(() => {
