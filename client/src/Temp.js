@@ -8,17 +8,24 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useNavigate } from "react-router-dom";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 const Temp = () => {
-  const [email,setEmail]=useState(localStorage.getItem('profile_email').replace(/['"]+/g, ''));
-  const [name,setName]=useState(localStorage.getItem('profile_name').replace(/['"]+/g, ''));
-  const [role,setRole]=useState("Admin");
+  const [email, setEmail] = useState(
+    localStorage.getItem("profile_email").replace(/['"]+/g, "")
+  );
+  const [name, setName] = useState(
+    localStorage.getItem("profile_name").replace(/['"]+/g, "")
+  );
+  const [role, setRole] = useState(
+    // localStorage.getItem("profile_role").replace(/['"]+/g, "")
+    "Doctor"
+  );
   const navigate = useNavigate();
-  const logOut=()=>{
-      localStorage.removeItem('profile_email');
-      localStorage.removeItem('profile_name');
-      localStorage.removeItem('profile_role');
-      navigate("/");
-  }
-  
+  const logOut = () => {
+    localStorage.removeItem("profile_email");
+    localStorage.removeItem("profile_name");
+    localStorage.removeItem("profile_role");
+    navigate("/");
+  };
+
   return (
     <div className="flex flex-col h-[100vh] bg-slate-800 w-[20%] text-white place-items-center">
       <Avatar
@@ -37,11 +44,15 @@ const Temp = () => {
         </Button>
       </Link>
       <div className="mt-4">
-      <Link to="/Profile">
-        <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
-          Profile Page
-        </Button>
-        </Link>
+        {role=="Doctor"?<Link to="/CheckMedicalFiles">
+          <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
+            Check Reports
+          </Button>
+        </Link>:<Link to="/Form">
+          <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
+            Add Medical Form
+          </Button>
+        </Link>}
       </div>
       <div className="mt-4">
         <Link to="/All">
@@ -55,17 +66,19 @@ const Temp = () => {
         </Link>
       </div>
       <div className="mt-4">
-        {role=="Admin"?
-        <Link to="/EditRoles">
-        <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
-          Edit Roles
-        </Button></Link>:
-        <Link to="/Saved">
-          <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
-            Saved Files
-          </Button>
-        </Link>
-      }
+        {role == "Admin" ? (
+          <Link to="/EditRoles">
+            <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
+              Edit Roles
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/Saved">
+            <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
+              Saved Files
+            </Button>
+          </Link>
+        )}
       </div>
       <hr className="mt-1 mb-6 h-1 w-[90%] border-2 border-violet-900" />
       <Button

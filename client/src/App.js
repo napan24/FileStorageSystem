@@ -10,8 +10,9 @@ import Login from "./components/Login";
 import ProfilePage from "./ProfilePage";
 import Profile from "./Profile";
 import SavedFiles  from "./components/SavedFiles";
-import FormContainer from "./components/FormContainer"
 import EditRoles from "./EditRoles";
+import ApproveMedicalFiles from "./components/ApproveMedicalFiles";
+import Form from "./components/Form";
 function App() {
   return ( 
     <div className="flex flex-row h-ful">
@@ -21,7 +22,8 @@ function App() {
           <Route exact path="/Home" element={<Home />}/>
           <Route exact path="/All" element={<AllFiles />} />
           <Route exact path="/Saved" element={<SavedFiles />} />
-          <Route exact path="/Profile" element={<ProfilePage />} />
+          <Route exact path="/Form" element={<Form />} />
+          <Route exact path="/CheckMedicalFiles" element={<ApproveMedicalFiles />} />
           <Route exact path="/EditRoles" element={<EditRoles />} />
         </Routes>
       </BrowserRouter>
