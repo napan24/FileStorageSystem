@@ -53,14 +53,48 @@ export const SavedFilesData = () => {
       openPDF();
     }
   }, [form]);
-
+  const getFormFirebase = (item) => {
+    getDownloadURL(ref(storage, item)).then((url) => {
+      window.open(url, "_blank");
+    });
+  };
   return (
     <div className="flex flex-col w-[80%] bg-black">
+      <div>
+        <div className="text-white text-3xl ml-4 mt-4">Saved Research Paper</div>
+        <div className=" flex flex-wrap">
+          {files != null &&
+            files.map((item) => (
+              item.firebase==true?
+              <>
+                <div style={{ position: "relative" }}>
+                  <Button
+                    onClick={() => {
+                      getFormFirebase(item.name);
+                    }}
+                  >
+                    <div className="w-36 mb-4 bg-amber-400 h-32 rounded-md ml-4 flex justify-center items-center flex-col">
+                      <InsertDriveFileIcon
+                        sx={{ color: "white", height: "50%", width: "50%" }}
+                      />
+                      <div className="mt-4 text-lg text-white">
+                        {item.name.length > 10
+                          ? item.name.substr(0, 10) + ".."
+                          : item.name.substr(0, 14)}
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+              </>:""
+            ))}
+        </div>
+      </div>
       <div>
         <div className="text-white text-3xl ml-4 mt-4">Saved Files</div>
         <div className=" flex flex-wrap">
           {files != null &&
             files.map((item) => (
+              item.firebase==false?
               <>
                 <div style={{ position: "relative" }}>
                   <Button
@@ -80,7 +114,7 @@ export const SavedFilesData = () => {
                     </div>
                   </Button>
                 </div>
-              </>
+              </>:""
             ))}
         </div>
       </div>

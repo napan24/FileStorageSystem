@@ -7,6 +7,10 @@ const SavedFiles=new mongoose.Schema({
     name:{
         type:String,
         required:true
+    },
+    firebase:{
+        type:Boolean,
+        default:false,
     }
 });
 const scheme=mongoose.model('SAVEDFILES',SavedFiles);

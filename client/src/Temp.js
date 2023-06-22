@@ -15,8 +15,7 @@ const Temp = () => {
     localStorage.getItem("profile_name").replace(/['"]+/g, "")
   );
   const [role, setRole] = useState(
-    // localStorage.getItem("profile_role").replace(/['"]+/g, "")
-    "Doctor"//admin,doctor,student
+    localStorage.getItem("profile_role").replace(/['"]+/g, "")
   );
   const navigate = useNavigate();
   const logOut = () => {
@@ -85,6 +84,17 @@ const Temp = () => {
           </Link>
         )}
       </div>
+      <div className="mt-4">
+        {role == "Doctor" ? (
+          <Link to="/UploadFile">
+            <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
+            Upload Research Paper
+            </Button>
+          </Link>
+        ) :
+        ""
+        }
+      </div>
       <hr className="mt-1 mb-6 h-1 w-[90%] border-2 border-violet-900" />
       <Button
         onClick={logOut}
@@ -100,3 +110,4 @@ const Temp = () => {
 };
 
 export default Temp;
+ 

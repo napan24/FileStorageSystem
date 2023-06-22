@@ -23,12 +23,13 @@ const FileSection = () => {
     saveFile(item);
   };
   const saveFile = async (item) => {
+    var check=false;
     const res = await fetch("/saveFile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ item, email}),
+      body: JSON.stringify({ item, email,check}),
     });
     const result = await res.json();
     console.log(result);

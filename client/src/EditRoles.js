@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Temp from "./Temp";
 import InputLabel from "@mui/material/InputLabel";
+import { Link } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -22,24 +23,24 @@ const EditRoles = () => {
   const editedRoles = (event, item) => {
     const newState = users.map(obj => {
       if (obj.name === item) {
-        return {...obj, Role: event.target.value};
+        return { ...obj, Role: event.target.value };
       }
       return obj;
     });
     setUsers(newState);
   };
   const saveRole = async (item) => {
-    var email=item.email;
-    var role=item.Role;
+    var email = item.email;
+    var role = item.Role;
     const res = await fetch("/saveRole", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({email,role}),
+      body: JSON.stringify({ email, role }),
     });
     const result = await res.json();
-    console.log(result);
+    alert("Role Changed Successfully");
   };
   useEffect(() => {
     findUsers();
@@ -67,7 +68,7 @@ const EditRoles = () => {
                       }}
                     >
                       <MenuItem value="Student">Student</MenuItem>
-                      <MenuItem value="Teacher">Teacher</MenuItem>
+                      <MenuItem value="Doctor">Doctor</MenuItem>
                       <MenuItem value="Admin">Admin</MenuItem>
                     </Select>
                   </FormControl>
@@ -75,7 +76,7 @@ const EditRoles = () => {
                     sx={{ borderRadius: "10px" }}
                     variant="contained"
                     color="success"
-                      onClick={()=>{saveRole(item)}}
+                    onClick={() => { saveRole(item) }}
                   >
                     Confirm
                   </Button>
@@ -83,6 +84,15 @@ const EditRoles = () => {
               </div>
             </>
           ))}
+        <Link to="/AddUser">
+          <Button
+            sx={{ borderRadius: "10px", width: "20%", marginLeft: "1vw" }}
+            variant="contained"
+            color="success"
+          >
+            Add New User
+          </Button>
+        </Link>
       </div>
     </>
   );

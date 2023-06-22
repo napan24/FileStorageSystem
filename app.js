@@ -55,10 +55,21 @@ app.post("/getSavedFiles",(req,res)=>{
         })
 })
 app.post("/saveFile",(req,res)=>{
-    const {email,item}=req.body;
+    const {email,item,check}=req.body;
     const data = new SavedFiles({
         email: email,
-        name: item
+        name: item,
+        firebase:check
+    });
+    data.save();
+    return res.json({ message: "Success" });
+})
+app.post("/saveUser",(req,res)=>{
+    const {email,name,role,}=req.body;
+    const data = new user({
+        email: email,
+        name: name,
+        Role:role
     });
     data.save();
     return res.json({ message: "Success" });

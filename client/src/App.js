@@ -17,6 +17,7 @@ import ApproveForm from "./components/ApproveForm"
 import UploadFile from "./components/UploadFile";
 import OpenFormStudent from "./components/OpenFormStudent";
 import ImportantReports from "./components/ImportantReports";
+import AddNewUser from "./components/AddNewUser";
 function App() {
   return ( 
     <div className="flex flex-row h-ful">
@@ -32,6 +33,8 @@ function App() {
           <Route exact path="/EditRoles" element={<EditRoles />} />
           <Route exact path="/ImportantReports" element={<ImportantReports />} />
           <Route exact path="/OpenPDFStudent" element={<OpenFormStudent />} />
+          <Route exact path="/UploadFile" element={<UploadFile />} />
+          <Route exact path="/AddUser" element={<AddNewUser />} />
         </Routes>
       </BrowserRouter>
       {/* <Temp/> */}
