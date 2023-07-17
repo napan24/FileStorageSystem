@@ -8,17 +8,15 @@ import { Button } from '@mui/material';
 const AddNewUser = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [role, setRole] = useState("Student");
     const saveUser = async () => {
-        if(name.length==0||email.length==0){
-            return;
-        }
         const res = await fetch("/saveUser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, role, name }),
+            body: JSON.stringify({ email, role, name,password }),
         });
         const result = await res.json();
         alert("Role Changed Successfully");
@@ -40,6 +38,11 @@ const AddNewUser = () => {
                         setEmail(event.target.value);
                     }}
                         placeholder='Enter Email' id="outlined-basic" variant="outlined" />
+
+<TextField style={{ width: "90%", marginLeft: "5%", marginBottom: "3vh" }} value={password} onChange={(event) => {
+                        setPassword(event.target.value);
+                    }}
+                        placeholder='Password' id="outlined-basic" variant="outlined" />
                     <FormControl
                         fullWidth
                         sx={{ backgroundColor: "white", width: "120px", marginLeft: "5%", width: "90%" }}
@@ -61,7 +64,7 @@ const AddNewUser = () => {
                         sx={{ borderRadius: "10px", marginLeft: "5%", marginBottom: "3vh", marginTop: "5%" }}
                         variant="contained"
                         color="success"
-                        onClick={() => { saveUser() }}
+                        onClick={()=>{saveUser()}}
                     >
                         Confirm
                     </Button>

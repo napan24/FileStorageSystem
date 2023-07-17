@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const user = require('./models/user');
 const SavedFiles = require('./models/SavedFiles');
@@ -9,17 +10,18 @@ const ConfirmForm=require('./models/ConfirmForm');
 const db = "mongodb+srv://napan:1234@cluster0.1iy39cq.mongodb.net/?retryWrites=true&w=majority";
 app.post("/",(req,res)=>{
     const {email,password}=req.body;
-    console.log(email);
     console.log(password);
-    user.find({ email: email,password:password })
+    user.find({ email: email})
         .then((exist) => {
-            console.log(exist);
-            if (exist) {
-                return res.json({exist });
-            }
-            else {
-                return res.json({ message: "User Does Not Exist" });
-            }
+            const pass=exist[0].password;
+            bcrypt.compare(password, pass).then(function(result) {
+                if(result){
+                    return res.json({exist });
+                }
+                else{
+                    return res.json({ message: "User Does Not Exist" });
+                }
+            });
         })
 })
 app.post("/saveConfirmFile",(req,res)=>{
@@ -64,16 +66,24 @@ app.post("/saveFile",(req,res)=>{
     data.save();
     return res.json({ message: "Success" });
 })
-app.post("/saveUser",(req,res)=>{
-    const {email,name,role,}=req.body;
+app.post('/saveUser', async function (req, res) {
+    try {  
+        const {email,name,role,}=req.body;
+    const salt=await bcrypt.genSalt(10);
+    const secPass=await bcrypt.hash(req.body.password,salt);
+    console.log(secPass);
     const data = new user({
         email: email,
         name: name,
-        Role:role
+        Role:role,
+        password:secPass
     });
     data.save();
     return res.json({ message: "Success" });
-})
+    } catch (e) {
+      res.end(e.message || e.toString());
+    }
+  });
 app.post("/saveRole",(req,res)=>{
     const {email,role}=req.body;
     user.findOneAndUpdate(
