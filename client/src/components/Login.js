@@ -16,13 +16,14 @@ import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 import { useNavigate } from "react-router-dom";
 import Captcha from "./Captcha";
+import { useEffect } from "react";
 const defaultTheme = createTheme();
 
 export default function Login() {
   const navigate = useNavigate();
   const [email,setEmail]=React.useState("");
   const [password,setPassword]=React.useState("");
-  const [match,setmatch]=React.useState(0);
+  const [match,setmatch]=React.useState(false);
   const searchUser = async () => {
     const res = await fetch("/", {
       method: "POST",
@@ -41,7 +42,7 @@ export default function Login() {
       localStorage.setItem('profile_name', JSON.stringify(result.exist[0].name));
       navigate("/Home");
     }
-  };
+  }; 
   // const downloadPDF=()=>{
   //   const capture=document.querySelector(".details");
   //   html2canvas(capture).then((canvas)=>{
@@ -52,7 +53,11 @@ export default function Login() {
   //     doc.addImage(imgdata,'PNG',0,0,componentWidth,componentHeight);
   //     doc.save();
   //   })
-  // }
+  // } 
+
+  useEffect(() => {
+    setmatch(false) ;
+  }, []) 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>

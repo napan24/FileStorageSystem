@@ -41,11 +41,8 @@ const Captcha = (props) => {
   } 
   useEffect(() => {
     const match = captcha ==OriCaptcha ; 
-       console.log(captcha + " ");  
-      console.log(match) 
       props.setmatch(match) ;
-  }, [captcha])
-  
+  }, [captcha])   
 
   return ( 
      <div className="Captcha" style={{ userSelect: 'none' }}  > 
