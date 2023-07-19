@@ -65,7 +65,7 @@ export default function SignUp() {
             const response=await axios.post(URL+"/addSignUpData",data);
             const doesExists=response.data.exists;
             if(doesExists){
-                setNofication_message("This email already in use.");
+                setNofication_message("This email is already in use.");
             }else{
                 setNofication_message("Request sent successfully, you will be able to log in after approval.");
             }
