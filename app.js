@@ -183,11 +183,22 @@ app.post("/getReqForm",(req,res)=>{
 })
 app.post("/addSignUpData",async(req,res)=>{
     const data=req.body;
-    const signupdata=new signupmodel(data);
-    console.log("data");
     try {
         const doesExists=await user.find({email:data.email});
-        if(doesExists.length==0){
+        const doesRequestExists=await signupmodel.find({email:data.email});
+        if(doesExists.length==0&&doesRequestExists.length==0){
+            const password=data.password;
+            const salt=await bcrypt.genSalt(10);
+            const hashedPassword=await bcrypt.hash(password,salt);
+            const updatedData={
+                name:data.name,
+                role:data.role,
+                email:data.email,
+                password:hashedPassword,
+                phone:data.phone,
+                userId:data.userId
+            }
+            const signupdata=new signupmodel(updatedData);
             try {
                 const response=await signupdata.save();
                 res.status(201).json({message:response,exists:false});
@@ -202,12 +213,47 @@ app.post("/addSignUpData",async(req,res)=>{
         console.log(error.message);
     }
 });
-app.get("/getSignUpData",async(req,res)=>{
+app.get("/getNewUserDetails",async(req,res)=>{
     try {
-        const data=await signupmodel.find({});
+        //data without password field
+        const data=await signupmodel.find({},{password:0});
         res.status(201).json({message:data});
     } catch (error) {
         res.status(404).json({message:error.message});
+    }
+});
+app.post("/addNewUser",async(req,res)=>{
+    const data_received=req.body;
+    let signupdata=null;
+    //deleting data from signupdetails collection
+    try {
+        const response=await signupmodel.findOneAndDelete({email:data_received.user_email});
+        signupdata=response;
+    } catch (error) {
+        console.log(error);
+    }
+    if(data_received.isApproved===true){
+        const new_user_data={
+            email:signupdata.email,
+            password:signupdata.password,
+            Role:signupdata.role,
+            name:signupdata.name
+        }
+        try {
+            const response=await user.create(new_user_data);
+            res.status(201).json({message:response});
+        } catch (error) {
+            res.status(401).json({message:error.message});
+        }
+    }
+});
+app.post("/deleteRole",async(req,res)=>{
+    const email_data=req.body.email;
+    try {
+        const response=await user.findOneAndDelete({email:email_data});
+        res.status(201).json({message:"deleted user"});
+    } catch (error) {
+        res.status(401).json({message:error.message});
     }
 });
 

@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Typography, styled } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, List, ListItem, ListItemIcon, ListItemText, Typography, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -28,13 +28,13 @@ margin:15px;
     color:#27374D;
 }
 `;
-export default function CardComponent(props) {
+export default function UnapprovedList(props) {
   
   const [users,setUsers]=useState([]);
 
   const getSignUpUserData=async()=>{
     try {
-      const response=await axios.get(URL+"/getSignUpData");
+      const response=await axios.get(URL+"/getNewUserDetails");
       const data=response.data.message;
       setUsers(data);
       return response;
@@ -42,23 +42,35 @@ export default function CardComponent(props) {
       return error;
     }
   }
-  function handleApprove(){
+  async function handleApproval(index,isApproved){
+    const user_data=users[index];
+    const sending_data={
+      user_email:user_data.email,
+      userId:user_data.userId,
+      isApproved:isApproved
+    };
 
+    try {
+      const response=await axios.post(URL+"/addNewUser",sending_data);
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error.message);
+      return error;
+    }
   }
-  function handleReject(){
-    
-  }
+  
   useEffect(()=>{
     getSignUpUserData();
-  },[]);
+  },[users]);
   return (
-    <> 
+    <div style={{backgroundColor:'#F6F1E9'}}> 
+    <Typography variant='h3' sx={{textAlign:'center',padding:2,backgroundColor:'#27374D',color:'#fff'}}>Unapproved Users</Typography>
     {users.map((user,i)=>{
-      console.log(user);
       return (
         <Accordion key={i}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />} >
-                <StyledTypographyH4 variant="h4">Roll no. : {user.userId}</StyledTypographyH4>
+                <StyledTypographyH4 variant="h4">{i+1}. User Id : {user.userId}</StyledTypographyH4>
             </AccordionSummary>
             <AccordionDetails>
                 <List>
@@ -81,14 +93,14 @@ export default function CardComponent(props) {
                 </List>
             </AccordionDetails>
             <div style={{textAlign:'right'}}>
-            <StyledButton variant="contained" style={{backgroundColor:"#D71313"}} onClick={handleReject}>Reject</StyledButton>
-            <StyledButton variant="contained" onClick={handleApprove}>Approve</StyledButton>
+            <StyledButton variant="contained" name='reject' style={{backgroundColor:"#D71313"}} onClick={()=>handleApproval(i,false)}>Reject</StyledButton>
+            <StyledButton variant="contained" name='approve' onClick={()=>handleApproval(i,true)}>Approve</StyledButton>
             </div>
         </Accordion>
       )
     })}
       
         
-    </>
+    </div>
   )
 }

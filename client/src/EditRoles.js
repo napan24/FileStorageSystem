@@ -42,16 +42,27 @@ const EditRoles = () => {
     const result = await res.json();
     alert("Role Changed Successfully");
   };
+
+  async function deleteRole(item){
+    const email=item.email;
+    const res = await fetch("/deleteRole", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+  }
   useEffect(() => {
     findUsers();
-  }, []);
+  }, [users]);
   return (
     <>
       <Temp />
       <div className="flex flex-col w-[80%] bg-black">
         {users != null &&
-          users.map((item) => (
-            <>
+          users.map((item,i) => (
+            <div key={i}>
               <div className="flex justify-between mt-6">
                 <div className="text-white ml-6 text-xl">{item.name}</div>
                 <div className="text-white flex justify-evenly w-[30%]">
@@ -80,9 +91,17 @@ const EditRoles = () => {
                   >
                     Confirm
                   </Button>
+                  <Button
+                    sx={{ borderRadius: "10px" }}
+                    variant="contained"
+                    color="warning"
+                    onClick={() => { deleteRole(item) }}
+                  >
+                    Delete
+                  </Button>
                 </div>
               </div>
-            </>
+            </div>
           ))}
         <Link to="/AddUser">
           <Button
