@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const app = express();
 const cors=require('cors');
@@ -10,7 +12,7 @@ const signupmodel=require('./models/signupdetails');
 const SavedFiles = require('./models/SavedFiles');
 const SavedForm=require('./models/SaveForm');
 const ConfirmForm=require('./models/ConfirmForm');
-const db = "mongodb+srv://napan:1234@cluster0.1iy39cq.mongodb.net/?retryWrites=true&w=majority";
+const db = process.env.DB_LINK;
 
 app.post("/",(req,res)=>{
     const {email,password}=req.body;
