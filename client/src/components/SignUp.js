@@ -119,6 +119,7 @@ export default function SignUp() {
           <MenuItem value={"Doctor"}>Doctor</MenuItem>
           <MenuItem value={"Admin"}>Admin</MenuItem>
           <MenuItem value={"Student"}>Student</MenuItem>
+          <MenuItem value={"Operator"}>Operator</MenuItem>
         </Select>
         </FormControl>
         </div>
