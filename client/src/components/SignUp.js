@@ -60,7 +60,6 @@ export default function SignUp() {
         });
     }
     const addSignUpData=async(data)=>{
-        // console.log("hello");
         try {
             const response=await axios.post(URL+"/addSignUpData",data);
             const doesExists=response.data.exists;
@@ -78,8 +77,6 @@ export default function SignUp() {
     function handleSignup(){
         addSignUpData(user);
         setIsNotification(true);
-
-        // Navigate("/");
     }
     useEffect(()=>{
         if(user.confirmPassword===""||user.email===""||
