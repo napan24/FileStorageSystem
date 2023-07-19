@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.oriCaptcha{
+  width: 205px;
+  border: 0.5px solid #1b191942;
+  height: 50px; 
+  padding: 1.5%;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.ref{
+  width: fit-content;
+  padding: 1%;
+}
