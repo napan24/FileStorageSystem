@@ -18,12 +18,18 @@ import UploadFile from "./components/UploadFile";
 import OpenFormStudent from "./components/OpenFormStudent";
 import ImportantReports from "./components/ImportantReports";
 import AddNewUser from "./components/AddNewUser";
+import SignUp from "./components/SignUp";
+import ApproveUser from "./components/ApproveUser";
 function App() {
   return ( 
     <div className="flex flex-row h-ful">
+    <>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Login />}/>
+          <Route exact path="/signUp" element={<SignUp />} />
+          <Route exact path="/ApproveUser" element={<ApproveUser />}/>
+
           <Route exact path="/Home" element={<Home />}/>
           <Route exact path="/All" element={<AllFiles />} />
           <Route exact path="/Saved" element={<SavedFiles />} />
@@ -37,10 +43,9 @@ function App() {
           <Route exact path="/AddUser" element={<AddNewUser />} />
         </Routes>
       </BrowserRouter>
-      {/* <Temp/> */}
-      {/* <RightSection/> */}
-      {/* <FileStorage/> */}
-    </div>
+
+      </>
+     </div>
   );
 }
 

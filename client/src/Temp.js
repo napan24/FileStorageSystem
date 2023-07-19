@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { useNavigate } from "react-router-dom";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 const Temp = () => {
@@ -43,6 +44,7 @@ const Temp = () => {
         </Button>
       </Link>
       <div className="mt-4">
+
         {role=="Doctor"?<Link to="/CheckMedicalFiles">
           <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
             Check Reports
@@ -70,12 +72,15 @@ const Temp = () => {
         </Link>
       </div>
       <div className="mt-4">
+
         {role == "Admin" ? (
+          <>
           <Link to="/EditRoles">
             <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
               Edit Roles
             </Button>
           </Link>
+          </>
         ) : (
           <Link to="/Saved">
             <Button size="large" variant="text" startIcon={<BookmarkIcon />}>
@@ -83,6 +88,18 @@ const Temp = () => {
             </Button>
           </Link>
         )}
+      </div>
+      <div className="mt-4">
+
+        {role == "Admin" ? (
+          <>
+          <Link to="/ApproveUser">
+            <Button size="large" variant="text" startIcon={<HowToRegIcon />}>
+              Approve Users
+            </Button>
+          </Link>
+          </>
+        ) : null}
       </div>
       <div className="mt-4">
         {role == "Doctor" ? (

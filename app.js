@@ -1,19 +1,24 @@
 const express = require('express');
 const app = express();
+const cors=require('cors');
+app.use(cors());
 app.use(express.json());
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const user = require('./models/user');
+const signupmodel=require('./models/signupdetails');
 const SavedFiles = require('./models/SavedFiles');
 const SavedForm=require('./models/SaveForm');
 const ConfirmForm=require('./models/ConfirmForm');
 const db = "mongodb+srv://napan:1234@cluster0.1iy39cq.mongodb.net/?retryWrites=true&w=majority";
+
 app.post("/",(req,res)=>{
     const {email,password}=req.body;
     console.log(password);
     user.find({ email: email})
         .then((exist) => {
             const pass=exist[0].password;
+            console.log(exist);
             bcrypt.compare(password, pass).then(function(result) {
                 if(result){
                     return res.json({exist });
@@ -23,7 +28,8 @@ app.post("/",(req,res)=>{
                 }
             });
         })
-})
+});
+
 app.post("/saveConfirmFile",(req,res)=>{
     const {url,email}=req.body;
     const data = new ConfirmForm({
@@ -32,7 +38,8 @@ app.post("/saveConfirmFile",(req,res)=>{
     });
     data.save();
     return res.json({ message: "Success" });
-})
+});
+
 app.post("/findUsers",(req,res)=>{
     user.find({})
         .then((exist) => {
@@ -174,7 +181,35 @@ app.post("/getReqForm",(req,res)=>{
             }
         })
 })
-
+app.post("/addSignUpData",async(req,res)=>{
+    const data=req.body;
+    const signupdata=new signupmodel(data);
+    console.log("data");
+    try {
+        const doesExists=await user.find({email:data.email});
+        if(doesExists.length==0){
+            try {
+                const response=await signupdata.save();
+                res.status(201).json({message:response,exists:false});
+            } catch (error) {
+                res.status(404).json({message:error.message});
+            }
+        }else{
+            console.log("already exists");
+            res.status(201).json({exists:true});
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+app.get("/getSignUpData",async(req,res)=>{
+    try {
+        const data=await signupmodel.find({});
+        res.status(201).json({message:data});
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+});
 
 server=app.listen(8000, () => {
     console.log("server at port 8000");
