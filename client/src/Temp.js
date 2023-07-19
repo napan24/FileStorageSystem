@@ -7,6 +7,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useNavigate } from "react-router-dom";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import PasswordChangeForm from "./components/PasswordChangeForm";
 const Temp = () => {
   const [email, setEmail] = useState(
     localStorage.getItem("profile_email").replace(/['"]+/g, "")
@@ -15,12 +16,12 @@ const Temp = () => {
     localStorage.getItem("profile_name").replace(/['"]+/g, "")
   );
   const [role, setRole] = useState(
-    localStorage.getItem("profile_role").replace(/['"]+/g, "")
+    "Admin"
   );
   const navigate = useNavigate();
   const logOut = () => {
     localStorage.removeItem("profile_email");
-    localStorage.removeItem("profile_name");
+    localStorage.removeItem("profile_me");
     localStorage.removeItem("profile_role");
     navigate("/");
   };
@@ -94,8 +95,12 @@ const Temp = () => {
         ) :
         ""
         }
+
       </div>
+      {/* <div><PasswordChangeForm/></div> */}
+
       <hr className="mt-1 mb-6 h-1 w-[90%] border-2 border-violet-900" />
+
       <Button
         onClick={logOut}
         size="large"
