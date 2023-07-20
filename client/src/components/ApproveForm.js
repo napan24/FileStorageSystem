@@ -14,7 +14,8 @@ import { storage } from '../config/firebase';
 import { ref, uploadBytes, updateMetadata } from "firebase/storage"
 import { v4 } from "uuid"
 const ApproveForm = () => {
-
+ 
+  const token=JSON.parse(localStorage.getItem('token'));
   const ref1 = createRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,6 +44,7 @@ const ApproveForm = () => {
 
 
   const createFileName = (extension = "", ...names) => {
+   
     if (!extension) {
       return "";
     }
@@ -64,7 +66,6 @@ const ApproveForm = () => {
 
   const downloadScreenshot = () => takeScreenShot(ref1.current).then(download);
 
-  
   const approve = async () => {
     const res1 = await fetch("/addComment", {
       method: "POST",
@@ -80,6 +81,7 @@ const ApproveForm = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":token
       },
       body: JSON.stringify({name}),
     });
@@ -93,6 +95,7 @@ const ApproveForm = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":token
       },
       body: JSON.stringify({name}),
     });

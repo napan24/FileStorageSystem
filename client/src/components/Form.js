@@ -71,11 +71,13 @@ const Form = () => {
 //     console.log(InfectionDescriptionNose);
 //     console.log(InfectionDescriptionThroat);
 //   };
+const token=JSON.parse(localStorage.getItem('token'));
   const saveForm = async (item) => {
     const res = await fetch("/saveForm", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":token
       },
       body: JSON.stringify({name,age,gender,address,earAnomalies,noseAnomalies,throatAnomalies,rightEarValue,leftEarValue,Hz500,Hz1000,Hz2000,Hz5000,
     treatmentRecommended,ThroatCovid,NoseCovid,ThroatInfectionDetected,NoseInfectionDetected,InfectionDescriptionNose,InfectionDescriptionThroat}),

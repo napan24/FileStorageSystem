@@ -12,6 +12,7 @@ import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { storage } from "./config/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
 const FileSection = () => {
+  const token=JSON.parse(localStorage.getItem('token'));
   const navigate = useNavigate();
   const location = useLocation();
   const [files, setFiles] = useState(null);
@@ -53,11 +54,14 @@ const FileSection = () => {
     saveFile(item);
   };
   const saveFile = async (item) => {
+    // console.log(token);
     var check=false;
     const res = await fetch("/saveFile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":token
+
       },
       body: JSON.stringify({ item, email,check}),
     });
