@@ -71,6 +71,10 @@ const SavedForm=new mongoose.Schema({
     important:{
         type:Boolean,
         default:false,
+    },
+    comment:{
+        type:String,
+        default:"No comment"
     }
 });
 const scheme=mongoose.model('SAVEDFORM',SavedForm);

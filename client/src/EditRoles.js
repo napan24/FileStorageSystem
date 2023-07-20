@@ -70,6 +70,7 @@ const EditRoles = () => {
                       <MenuItem value="Student">Student</MenuItem>
                       <MenuItem value="Doctor">Doctor</MenuItem>
                       <MenuItem value="Admin">Admin</MenuItem>
+                      <MenuItem value="Operator">Operator</MenuItem>
                     </Select>
                   </FormControl>
                   <Button

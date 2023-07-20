@@ -16,27 +16,28 @@ const OpenFormStudent = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const ref1 = createRef(null);
-    console.log(location.state)
-    const [name, setName] = React.useState(location.state.details.name);
-    const [age, setAge] = React.useState(location.state.details.age);
-    const [gender, setGender] = React.useState(location.state.details.gender);
-    const [address, setAdress] = React.useState(location.state.details.address);
-    const [earAnomalies, setEarAnomalies] = React.useState(location.state.details.earAnomalies);
-    const [noseAnomalies, setNoseAnomalies] = React.useState(location.state.details.noseAnomalies);
-    const [throatAnomalies, setThroatAnomalies] = React.useState(location.state.details.throatAnomalies);
-    const [rightEarValue, setRightEarValue] = React.useState(location.state.details.rightEarValue);
-    const [leftEarValue, setLeftEarValue] = React.useState(location.state.details.leftEarValue);
-    const [Hz500, setHz500] = React.useState(location.state.details.Hz500);
-    const [Hz1000, setHz1000] = React.useState(location.state.details.Hz1000);
-    const [Hz2000, setHz2000] = React.useState(location.state.details.Hz2000);
-    const [Hz5000, setHz5000] = React.useState(location.state.details.Hz5000);
-    const [treatmentRecommended, setTreatmentRecommended] = React.useState(location.state.details.treatmentRecommended);
-    const [ThroatInfectionDetected, setThroatInfectionDetected] = React.useState(location.state.details.ThroatInfectionDetected);
-    const [NoseInfectionDetected, setNoseInfectionDetected] = React.useState(location.state.details.NoseInfectionDetected);
-    const [ThroatCovid, setThroatCovid] = React.useState(location.state.details.ThroatCovid);
-    const [NoseCovid, setNoseCovid] = React.useState(location.state.details.NoseCovid);
-    const [InfectionDescriptionThroat, setInfectionDescriptionThroat] = React.useState(location.state.details.InfectionDescriptionThroat);
-    const [InfectionDescriptionNose, setInfectionDescriptionNose] = React.useState(location.state.details.InfectionDescriptionNose);
+    console.log(location.state.details[0])
+    const [name, setName] = React.useState(location.state.details[0].name);
+    const [age, setAge] = React.useState(location.state.details[0].age);
+    const [comment] = React.useState(location.state.details[0].comment);
+    const [gender, setGender] = React.useState(location.state.details[0].gender);
+    const [address, setAdress] = React.useState(location.state.details[0].address);
+    const [earAnomalies, setEarAnomalies] = React.useState(location.state.details[0].earAnomalies);
+    const [noseAnomalies, setNoseAnomalies] = React.useState(location.state.details[0].noseAnomalies);
+    const [throatAnomalies, setThroatAnomalies] = React.useState(location.state.details[0].throatAnomalies);
+    const [rightEarValue, setRightEarValue] = React.useState(location.state.details[0].rightEarValue);
+    const [leftEarValue, setLeftEarValue] = React.useState(location.state.details[0].leftEarValue);
+    const [Hz500, setHz500] = React.useState(location.state.details[0].Hz500);
+    const [Hz1000, setHz1000] = React.useState(location.state.details[0].Hz1000);
+    const [Hz2000, setHz2000] = React.useState(location.state.details[0].Hz2000);
+    const [Hz5000, setHz5000] = React.useState(location.state.details[0].Hz5000);
+    const [treatmentRecommended, setTreatmentRecommended] = React.useState(location.state.details[0].treatmentRecommended);
+    const [ThroatInfectionDetected, setThroatInfectionDetected] = React.useState(location.state.details[0].ThroatInfectionDetected);
+    const [NoseInfectionDetected, setNoseInfectionDetected] = React.useState(location.state.details[0].NoseInfectionDetected);
+    const [ThroatCovid, setThroatCovid] = React.useState(location.state.details[0].ThroatCovid);
+    const [NoseCovid, setNoseCovid] = React.useState(location.state.details[0].NoseCovid);
+    const [InfectionDescriptionThroat, setInfectionDescriptionThroat] = React.useState(location.state.details[0].InfectionDescriptionThroat);
+    const [InfectionDescriptionNose, setInfectionDescriptionNose] = React.useState(location.state.details[0].InfectionDescriptionNose);
 
 
     const [form, setForm] = useState(null);
@@ -373,6 +374,20 @@ const OpenFormStudent = () => {
                                   }}
                             />
                         </div>
+                        <div className="flex mr-4">
+            <TextField
+                  size="small"
+                  style={{ width: "45vw" }}
+                  value={comment}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  multiline
+                  id="outlined-basic"
+                  placeholder="Leave any import notes/details about the report"
+                  variant="outlined"
+                />
+            </div>
                     </div>
                 </div>
                 <div className='ml-4'>

@@ -58,6 +58,7 @@ const AddNewUser = () => {
                             <MenuItem value="Student">Student</MenuItem>
                             <MenuItem value="Doctor">Doctor</MenuItem>
                             <MenuItem value="Admin">Admin</MenuItem>
+                            <MenuItem value="Admin">Operator</MenuItem>
                         </Select>
                     </FormControl>
                     <Button

@@ -189,6 +189,33 @@ app.post("/saveForm",(req,res)=>{
         data.save();
         return res.json({ message: "Success" });
 })
+app.post("/addComment",(req,res)=>{
+    const {comment,id}=req.body;
+    console.log(comment,id);
+    SavedForm.findOneAndUpdate(
+        { "_id": id },
+        { "$set": { "comment": comment } },
+        { "new": true, "upsert": true },
+        function (err) {
+            if (err) { // err: any errors that occurred
+                console.log(err);
+            }
+        })
+        return res.json({ message: "Success" });
+})
+app.post("/findFile",(req,res)=>{
+    const {item}=req.body;
+    console.log(item);
+    SavedForm.find({"_id":item})
+        .then((exist) => {
+            if (exist) {
+                return res.json({exist });
+            }
+            else {
+                return res.json({ message: "User Does Not Exist" });
+            }
+        })
+})
 app.post("/getForms",(req,res)=>{
     SavedForm.find({})
         .then((exist) => {
