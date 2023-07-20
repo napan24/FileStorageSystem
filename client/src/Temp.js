@@ -16,7 +16,7 @@ const Temp = () => {
     localStorage.getItem("profile_name").replace(/['"]+/g, "")
   );
   const [role, setRole] = useState(
-    "Admin"
+    localStorage.getItem("profile_role").replace(/['"]+/g, "")
   );
   const navigate = useNavigate();
   const logOut = () => {
@@ -38,11 +38,7 @@ const Temp = () => {
       <div className="mt-1 text-base">{email}</div>
       <div className="mt-1 text-base">{role}</div>
       <hr className="mt-3 mb-6 h-1 w-[90%] border-2 border-violet-900" />
-      <Link to="/Home">
-        <Button size="large" variant="text" startIcon={<DashboardIcon />}>
-          Dashboard
-        </Button>
-      </Link>
+    
       <div className="mt-4">
         {role=="Doctor"?<Link to="/CheckMedicalFiles">
           <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
@@ -101,15 +97,28 @@ const Temp = () => {
 
       <hr className="mt-1 mb-6 h-1 w-[90%] border-2 border-violet-900" />
 
+      <Link to="/ChaThePass">
+          <Button
+           size="large"
+           sx={{ width: "100%",marginBottom:"1rem" }}
+           disableElevation
+           variant="contained"
+          >
+            Change Password
+          </Button>
+        </Link>
+
+
       <Button
         onClick={logOut}
         size="large"
-        sx={{ width: "80%" }}
+        sx={{ width: "64%" }}
         disableElevation
         variant="contained"
       >
         Log Out
       </Button>
+      
     </div>
   );
 };

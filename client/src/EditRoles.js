@@ -95,15 +95,7 @@ const EditRoles = () => {
           <br />
           <br />
         </Link>
-        <Link to="/ChaThePass">
-          <Button
-            sx={{ borderRadius: "10px", width: "20%", marginLeft: "1vw" }}
-            variant="contained"
-            color="success"
-          >
-            Change Password
-          </Button>
-        </Link>
+       
       </div>
     </>
   );

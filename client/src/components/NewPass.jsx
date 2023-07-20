@@ -52,7 +52,7 @@ const NewPass = () => {
   };
   
   const checkPasswordsMatch = () => {
-   
+   if(newPassword.length==0 || confirmPassword.length==0) return;
     setPasswordsMatch(newPassword === confirmPassword);
   };
   useEffect(() => {
