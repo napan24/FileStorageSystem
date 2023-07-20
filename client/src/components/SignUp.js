@@ -78,9 +78,6 @@ export default function SignUp() {
             return error.response;
         }
     }
-    useEffect(()=>{
-        console.log(nofication_message);
-    },[nofication_message]);
     function handleSignup(){
         addSignUpData(user);
         setIsNotification(true);
