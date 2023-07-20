@@ -201,13 +201,14 @@ app.post("/addSignUpData",async(req,res)=>{
             const signupdata=new signupmodel(updatedData);
             try {
                 const response=await signupdata.save();
-                res.status(201).json({message:response,exists:false});
+                res.status(201).json({message:response,exists:false,requestExists:false});
             } catch (error) {
                 res.status(404).json({message:error.message});
             }
         }else{
-            console.log("already exists");
-            res.status(201).json({exists:true});
+            // console.log("already exists");
+            if(doesExists.length==0)res.status(201).json({exists:false,requestExists:true});
+            else res.status(201).json({exists:true,requestExists:false});
         }
     } catch (error) {
         console.log(error.message);

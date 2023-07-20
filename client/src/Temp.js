@@ -27,7 +27,7 @@ const Temp = () => {
   };
 
   return (
-    <div className="flex flex-col h-[100vh] bg-slate-800 w-[20%] text-white place-items-center">
+    <div  className="flex flex-col h-[100vh] bg-slate-800 w-[20%] text-white place-items-center">
       <Avatar
         className="mt-6"
         alt="Remy Sharp"

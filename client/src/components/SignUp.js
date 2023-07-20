@@ -61,19 +61,26 @@ export default function SignUp() {
     }
     const addSignUpData=async(data)=>{
         try {
+            
             const response=await axios.post(URL+"/addSignUpData",data);
             const doesExists=response.data.exists;
+            const requestExists=response.data.requestExists;
+            
             if(doesExists){
-                setNofication_message("This email is already in use.");
+                setNofication_message("User already exists. Log In with your credentials.");
+            }else if(requestExists){
+                setNofication_message("Request already exists from this user. Wait for approval.");
             }else{
-                setNofication_message("Request sent successfully, you will be able to log in after approval.");
+                setNofication_message("Request sent successfully! Wait for approval.");
             }
         } catch (error) {
             console.log("Error while adding signup data:",error.message);
             return error.response;
         }
     }
-    
+    useEffect(()=>{
+        console.log(nofication_message);
+    },[nofication_message]);
     function handleSignup(){
         addSignUpData(user);
         setIsNotification(true);
@@ -90,6 +97,8 @@ export default function SignUp() {
     useEffect(()=>{
         if(user.password!==user.confirmPassword){
             setPasswordWarning(true);
+        }else{
+            setPasswordWarning(false);
         }
     },[user.confirmPassword,user.password]);
   return (
@@ -127,7 +136,6 @@ export default function SignUp() {
         <FormControl>
             <StyleTextField required  name="email" label="User's Email" type='email' variant="outlined" value={user.email} onChange={handleChange}/>
         </FormControl>
-
         <FormControl>
         <StyleTextField type="password" required  name="password" label="Password" variant="outlined" value={user.password} onChange={handleChange} />
         </FormControl>
