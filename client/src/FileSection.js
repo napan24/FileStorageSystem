@@ -11,6 +11,8 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { storage } from "./config/firebase";
 const FileSection = () => {
+  const token=JSON.parse(localStorage.getItem('token'));
+ 
   const [files, setFiles] = useState(null);
   const [email,setEmail]=useState(localStorage.getItem('profile_email').replace(/['"]+/g, ''));
   const [role,setRole]=useState(localStorage.getItem('profile_role').replace(/['"]+/g, ''));
@@ -23,11 +25,14 @@ const FileSection = () => {
     saveFile(item);
   };
   const saveFile = async (item) => {
+    // console.log(token);
     var check=false;
     const res = await fetch("/saveFile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":token
+
       },
       body: JSON.stringify({ item, email,check}),
     });

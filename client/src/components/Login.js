@@ -33,14 +33,14 @@ export default function Login() {
       body: JSON.stringify({ email, password }),
     });
     const result = await res.json();
-    console.log(result.exist);
-    if(result.exist.length>0){
-      console.log(result.exist[0]);
+    console.log(result);
+    if(result.token){
+      localStorage.setItem('token', JSON.stringify(`Bearer ${result.token}`));
       localStorage.setItem('profile_email', JSON.stringify(result.exist[0].email));
       localStorage.setItem('profile_role', JSON.stringify(result.exist[0].Role));
       localStorage.setItem('profile_password', JSON.stringify(result.exist[0].password));
       localStorage.setItem('profile_name', JSON.stringify(result.exist[0].name));
-      navigate("/All");
+      navigate("/Home");
     }
   }; 
   // const downloadPDF=()=>{

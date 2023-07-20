@@ -10,11 +10,14 @@ const AddNewUser = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("Student");
+    const token=JSON.parse(localStorage.getItem('token'));
+
     const saveUser = async () => {
         const res = await fetch("/saveUser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization":token
             },
             body: JSON.stringify({ email, role, name,password }),
         });

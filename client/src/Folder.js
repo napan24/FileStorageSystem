@@ -11,6 +11,8 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { storage } from "./config/firebase";
 const Folder = () => {
+  
+  const token=JSON.parse(localStorage.getItem('token'));
     const [files, setFiles] = useState(null);
     const [email,setEmail]=useState(localStorage.getItem('profile_email').replace(/['"]+/g, ''));
     const openPDF = (item) => {
@@ -27,6 +29,7 @@ const Folder = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization":token
           },
           body: JSON.stringify({ item, email,check}),
         });

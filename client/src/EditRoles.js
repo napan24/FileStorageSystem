@@ -29,6 +29,7 @@ const EditRoles = () => {
     });
     setUsers(newState);
   };
+  const token=JSON.parse(localStorage.getItem('token'));
   const saveRole = async (item) => {
     var email = item.email;
     var role = item.Role;
@@ -36,6 +37,7 @@ const EditRoles = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":token
       },
       body: JSON.stringify({ email, role }),
     });
@@ -92,10 +94,7 @@ const EditRoles = () => {
           >
             Add New User
           </Button>
-          <br />
-          <br />
         </Link>
-       
       </div>
     </>
   );

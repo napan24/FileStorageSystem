@@ -7,6 +7,9 @@ const user = require('./models/user');
 const SavedFiles = require('./models/SavedFiles');
 const SavedForm=require('./models/SaveForm');
 const ConfirmForm=require('./models/ConfirmForm');
+
+const jwt=require('jsonwebtoken');
+const checkAuth=require('./checkAuth')
 const db = "mongodb+srv://napan:1234@cluster0.1iy39cq.mongodb.net/?retryWrites=true&w=majority";
 app.post("/",(req,res)=>{
     const {email,password}=req.body;
@@ -16,7 +19,20 @@ app.post("/",(req,res)=>{
             const pass=exist[0].password;
             bcrypt.compare(password, pass).then(function(result) {
                 if(result){
-                    return res.json({exist });
+                    const accesstoken=jwt.sign({
+                       _id:exist[0]._id
+                      },"random",
+                      {
+                        expiresIn:"5h"
+                      }
+                      
+                      )
+                    return res.status(200).json({
+                        message:"Successfully logged in",
+                        token:accesstoken,
+                        exist
+                    })
+
                 }
                 else{
                     return res.json({ message: "User Does Not Exist" });
@@ -62,7 +78,7 @@ app.post("/changePassword",async(req, res)=>{
 
 
 })
-app.post("/saveConfirmFile",(req,res)=>{
+app.post("/saveConfirmFile",checkAuth,(req,res)=>{
     const {url,email}=req.body;
     const data = new ConfirmForm({
         email: email,
@@ -94,7 +110,7 @@ app.post("/getSavedFiles",(req,res)=>{
             }
         })
 })
-app.post("/saveFile",(req,res)=>{
+app.post("/saveFile",checkAuth,(req,res)=>{
     const {email,item,check}=req.body;
     const data = new SavedFiles({
         email: email,
@@ -104,7 +120,7 @@ app.post("/saveFile",(req,res)=>{
     data.save();
     return res.json({ message: "Success" });
 })
-app.post('/saveUser', async function (req, res) {
+app.post('/saveUser', checkAuth,async function (req, res) {
     try {  
         const {email,name,role,}=req.body;
     const salt=await bcrypt.genSalt(10);
@@ -122,7 +138,7 @@ app.post('/saveUser', async function (req, res) {
       res.end(e.message || e.toString());
     }
   });
-app.post("/saveRole",(req,res)=>{
+app.post("/saveRole",checkAuth,(req,res)=>{
     const {email,role}=req.body;
     user.findOneAndUpdate(
         { "email": email },
@@ -135,7 +151,7 @@ app.post("/saveRole",(req,res)=>{
         })
     return res.json({ message: "Success" });
 })
-app.post("/approve",(req,res)=>{
+app.post("/approve",checkAuth,(req,res)=>{
     const {name}=req.body;
     SavedForm.findOneAndUpdate(
         { "name": name },
@@ -148,7 +164,7 @@ app.post("/approve",(req,res)=>{
         })
     return res.json({ message: "Success" });
 })
-app.post("/markAsImportant",(req,res)=>{
+app.post("/markAsImportant",checkAuth,(req,res)=>{
     const {name}=req.body;
     SavedForm.findOneAndUpdate(
         { "name": name },
@@ -161,7 +177,7 @@ app.post("/markAsImportant",(req,res)=>{
         })
     return res.json({ message: "Success" });
 })
-app.post("/saveForm",(req,res)=>{
+app.post("/saveForm",checkAuth,(req,res)=>{
     const {name,age,gender,address,earAnomalies,noseAnomalies,throatAnomalies,rightEarValue,leftEarValue,Hz500,Hz1000,Hz2000,Hz5000,
         treatmentRecommended,ThroatCovid,NoseCovid,ThroatInfectionDetected,NoseInfectionDetected,InfectionDescriptionNose,InfectionDescriptionThroat}=req.body;
         const data = new SavedForm({
