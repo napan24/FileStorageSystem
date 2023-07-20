@@ -14,11 +14,11 @@ const db = "mongodb+srv://napan:1234@cluster0.1iy39cq.mongodb.net/?retryWrites=t
 
 app.post("/",(req,res)=>{
     const {email,password}=req.body;
-    console.log(password);
+    // console.log(password);
     user.find({ email: email})
         .then((exist) => {
             const pass=exist[0].password;
-            console.log(exist);
+            // console.log(exist);
             bcrypt.compare(password, pass).then(function(result) {
                 if(result){
                     return res.json({exist });
@@ -78,7 +78,7 @@ app.post('/saveUser', async function (req, res) {
         const {email,name,role,}=req.body;
     const salt=await bcrypt.genSalt(10);
     const secPass=await bcrypt.hash(req.body.password,salt);
-    console.log(secPass);
+    // console.log(secPass);
     const data = new user({
         email: email,
         name: name,
