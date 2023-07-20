@@ -24,6 +24,44 @@ app.post("/",(req,res)=>{
             });
         })
 })
+app.post("/changePassword",async(req, res)=>{
+    const { currentPassword, newPassword, email } = req.body;
+    console.log("hello");
+    try {
+        const user_data = await user.findOne({ email: email });
+           console.log(user_data)
+        
+    
+        // Check if the user exists
+        if (!user_data) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+    
+        
+        const isPasswordCorrect = await bcrypt.compare(currentPassword, user_data.password);
+        // console.log(isPasswordCorrect)
+    
+        if (!isPasswordCorrect) {
+          return res.status(401).json({ error: 'Invalid current password' });
+        }
+    
+        const salt=await bcrypt.genSalt(10);
+    const secPass=await bcrypt.hash(newPassword,salt);
+        
+        user_data.password = secPass;
+        await user_data.save();
+    
+
+        res.json({ message: 'Password changed successfully' });
+      } catch (error) {
+
+        console.error('Error changing password:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+
+
+
+})
 app.post("/saveConfirmFile",(req,res)=>{
     const {url,email}=req.body;
     const data = new ConfirmForm({
