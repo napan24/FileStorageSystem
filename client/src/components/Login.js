@@ -40,7 +40,7 @@ export default function Login() {
       localStorage.setItem('profile_role', JSON.stringify(result.exist[0].Role));
       localStorage.setItem('profile_password', JSON.stringify(result.exist[0].password));
       localStorage.setItem('profile_name', JSON.stringify(result.exist[0].name));
-      navigate("/Home");
+      navigate("/All");
     }
   }; 
   // const downloadPDF=()=>{
