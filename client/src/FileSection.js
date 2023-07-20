@@ -10,17 +10,46 @@ import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { storage } from "./config/firebase";
+import { useLocation, useNavigate } from "react-router-dom";
 const FileSection = () => {
   const token=JSON.parse(localStorage.getItem('token'));
- 
+  const navigate = useNavigate();
+  const location = useLocation();
   const [files, setFiles] = useState(null);
   const [email,setEmail]=useState(localStorage.getItem('profile_email').replace(/['"]+/g, ''));
   const [role,setRole]=useState(localStorage.getItem('profile_role').replace(/['"]+/g, ''));
+  const [redirectFile,setRedirectFile]=useState(null);
   const openPDF = (item) => {
-    getDownloadURL(ref(storage, item)).then((url) => {
-      window.open(url, "_blank");
-    });
+    // getDownloadURL(ref(storage, item)).then((url) => {
+    //   window.open(url, "_blank");
+    // });
+    findFile(item._id);
   };
+  const findFile = async (item) => {
+    const res = await fetch("/findFile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ item}),
+    });
+    const result = await res.json();
+    console.log(result.exist);
+    setRedirectFile(result.exist);
+  };
+  const redirectToFile = () => {
+    navigate("/OpenPDFStudent",{
+      state: {
+        details:redirectFile
+    },
+  },);
+  };
+  useEffect(() => {
+    if(redirectFile!=null){
+      redirectToFile()
+    }
+  }, [redirectFile])
+  
   const addFileToSaved = (item) => {
     saveFile(item);
   };
@@ -73,7 +102,7 @@ const FileSection = () => {
               <div style={{ position: "relative" }}>
                 <Button
                   onClick={() => {
-                    openPDF(item.name);
+                    openPDF(item);
                   }}
                 >
                   <div className="w-36 mb-4 bg-amber-400 h-32 rounded-md ml-4 flex justify-center items-center flex-col">

@@ -20,7 +20,9 @@ const ApproveForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [name, setName] = React.useState(location.state.details.name);
+  const [id] = React.useState(location.state.details._id);
   const [age, setAge] = React.useState(location.state.details.age);
+  const [comment, setComment] = React.useState("");
   const [gender, setGender] = React.useState(location.state.details.gender);
   const [address, setAdress] = React.useState(location.state.details.address);
   const [earAnomalies, setEarAnomalies] = React.useState(location.state.details.earAnomalies);
@@ -65,6 +67,15 @@ const ApproveForm = () => {
   const downloadScreenshot = () => takeScreenShot(ref1.current).then(download);
 
   const approve = async () => {
+    const res1 = await fetch("/addComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({comment,id}),
+    });
+    const result1 = await res1.json();
+    console.log(result1)
     var name=location.state.details.name;
     const res = await fetch("/approve", {
       method: "POST",
@@ -391,6 +402,20 @@ const ApproveForm = () => {
                   setTreatmentRecommended(!treatmentRecommended);
                 }}
               />
+            </div>
+            <div className="flex">
+            <TextField
+                  size="small"
+                  style={{ width: "45vw" }}
+                  multiline
+                  id="outlined-basic"
+                  value={comment}
+                  placeholder="Add Comment/notes"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setComment(event.target.value);
+                  }}
+                />
             </div>
           </div>
         </div>

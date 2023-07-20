@@ -53,11 +53,11 @@ const Temp = () => {
         <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
           Important Reports
         </Button>
-      </Link>:<Link to="/Form">
+      </Link>:role=="Operator"?<Link to="/Form">
           <Button size="large" variant="text" startIcon={<AccountCircleIcon />}>
             Add Medical Form
           </Button>
-        </Link>}
+        </Link>:""}
       </div>
       <div className="mt-4">
         <Link to="/All">
